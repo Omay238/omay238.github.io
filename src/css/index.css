@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "VCR OSD MONO";
+    src: url("../fonts/VCR_OSD_MONO.ttf") format("truetype");
+}
+
+* {
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+    font-family: "VCR OSD MONO", serif;
+}
+main {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

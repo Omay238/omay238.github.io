@@ -17,8 +17,8 @@ let shaderConfig = {
 
     static_noise_intensity: 0.02,
 
-    aberration: 0.00, // Chromatic aberration, a distortion on each color channel.
-    brightness: 1.2, // When adding scanline gaps and grille the image can get very dark. Brightness tries to compensate for that.
+    aberration: 0, // Chromatic aberration, a distortion on each color channel.
+    brightness: 1.1, // When adding scanline gaps and grille the image can get very dark. Brightness tries to compensate for that.
     discolor: false, // Add a discolor effect simulating a VHS
 
     warp_amount: 0.5, // Warp the texture edges simulating the curved glass of a CRT monitor or old TV.
@@ -104,8 +104,6 @@ function draw() {
 
 
     // all the rendering stuff should go here
-    pg.fill(192)
-    pg.rect(0, emuSize[1] - 32, emuSize[0], 32)
 
     // mouse
     if (activeCursor === "arrow") {

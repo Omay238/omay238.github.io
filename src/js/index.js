@@ -10,14 +10,14 @@ let shaderConfig = {
     grille_opacity: 0.1,
     resolution: emuSize, // Set the number of rows and columns the texture will be divided in. Scanlines and grille will make a square based on these values
 
-    pixelate: true, // Fill each square ("pixel") with a sampled color, creating a pixel look and a more accurate representation of how a CRT monitor would work.
+    pixelate: false, // Fill each square ("pixel") with a sampled color, creating a pixel look and a more accurate representation of how a CRT monitor would work.
 
     noise_opacity: 0.02,
     noise_speed: 5.0, // There is a movement in the noise pattern that can be hard to see first. This sets the speed of that movement.
 
     static_noise_intensity: 0.02,
 
-    aberration: 0.005, // Chromatic aberration, a distortion on each color channel.
+    aberration: 0.00, // Chromatic aberration, a distortion on each color channel.
     brightness: 1.2, // When adding scanline gaps and grille the image can get very dark. Brightness tries to compensate for that.
     discolor: false, // Add a discolor effect simulating a VHS
 
@@ -31,7 +31,10 @@ let shaderConfig = {
 let animation = "on";
 let animationStart = -Infinity;
 
-let bgimg, cursorimg;
+let bgimg, arrowimg, pointerimg;
+
+let activeCursor = "arrow";
+
 let font;
 
 let items = {
@@ -45,6 +48,9 @@ let items = {
                     animation = "off";
                 }
             }
+        },
+        render: (hovered) => {
+
         }
     }
 }
@@ -66,7 +72,8 @@ function easeOutCirc(x) {
 function preload() {
     shaderProgram = loadShader('shaders/crt.vert', 'shaders/crt.frag');
     bgimg = loadImage('images/background.png');
-    cursorimg = loadImage('images/cursor.png');
+    arrowimg = loadImage('images/arrow.png');
+    pointerimg = loadImage('images/pointer.png');
     font = loadFont('fonts/VCR_OSD_MONO.ttf');
 }
 
@@ -89,18 +96,23 @@ function setup() {
 
 function draw() {
     // scale mouse for future usage
-    smouseX = mouseX * (emuSize[0] / width);
-    smouseY = mouseY * (emuSize[1] / height);
+    smouseX = round(mouseX * (emuSize[0] / width));
+    smouseY = round(mouseY * (emuSize[1] / height));
 
     // wow the background i made is just so good guys
     pg.image(bgimg, 0, 0);
 
 
     // all the rendering stuff should go here
-
+    pg.fill(192)
+    pg.rect(0, emuSize[1] - 32, emuSize[0], 32)
 
     // mouse
-    pg.image(cursorimg, smouseX, smouseY);
+    if (activeCursor === "arrow") {
+        pg.image(arrowimg, smouseX, smouseY);
+    } else if (activeCursor === "pointer") {
+        pg.image(pointerimg, smouseX - 6, smouseY); // offset because the pointer finger is to the right in the image
+    }
 
 
     // on/off animation

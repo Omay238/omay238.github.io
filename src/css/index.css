@@ -8,10 +8,19 @@
     overflow: hidden;
     background-color: black;
     font-family: "VCR OSD MONO", serif;
+    cursor: none;
 }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    cursor: none;
+}
+
 main {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
 }
